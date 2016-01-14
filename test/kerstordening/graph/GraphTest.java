@@ -62,11 +62,18 @@ public class GraphTest {
     @Test
     public void testIsInitialized() {
         System.out.println("isInitialized");
-        Graph instance = new Graph();
-        boolean expResult = false;
-        boolean result = instance.isInitialized();
-        assertEquals(expResult, result);
+        Graph g = new Graph();
+        assertFalse(g.isInitialized());
+        st.stream().forEach((n) -> {
+            g.addNode(n);
+        });
+        g.initialize(map);
+        assertTrue(g.isInitialized());
+        try {
+            g.addNode("B");
+        } catch (Exception e) {
 
+        }
     }
 
     /**
@@ -79,7 +86,7 @@ public class GraphTest {
         ArrayList<Node> l;
 
         for (String s : st) {
-            g.addNode(s, s);
+            g.addNode(s);
         }
 
         g.initialize(map);
@@ -89,6 +96,54 @@ public class GraphTest {
         for (int i = 0; i < l.size(); i++) {
             System.out.println(l.get(i).getName() + " buys for: " + l.get((i + 1) % l.size()).getName());
         }
+
+    }
+
+    /**
+     * Test of addNode method, of class Graph.
+     */
+    @Test
+    public void testAddNode() {
+        System.out.println("addNode");
+        Graph g = new Graph();
+        st.stream().forEach((n) -> {
+            g.addNode(n);
+        });
+        assertEquals(st.size(), g.size());
+    }
+
+    /**
+     * Test of deinitialize method, of class Graph.
+     */
+    @Test
+    public void testDeinitialize() {
+        System.out.println("deinitialize");
+        Graph g = new Graph();
+        g.deinitialize();
+        assertFalse(g.isInitialized());
+        st.stream().forEach((n) -> {
+            g.addNode(n);
+        });
+        g.initialize(map);
+        assertTrue(g.isInitialized());
+        g.deinitialize();
+        assertFalse(g.isInitialized());
+    }
+
+    /**
+     * Test of reset method, of class Graph.
+     */
+    @Test
+    public void testReset() {
+        System.out.println("reset");
+        Graph g = new Graph();
+        st.stream().forEach((n) -> {
+            g.addNode(n);
+        });
+        g.initialize(map);
+        g.reset();
+        assertFalse(g.isInitialized());
+        assertEquals(0, g.size());
 
     }
 

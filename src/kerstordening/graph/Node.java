@@ -19,17 +19,15 @@ public class Node {
     private final int id;
     private final String name;
     private ArrayList<Node> buyFor;
-    private final String filename;
     private boolean chosen;
 
     private int index;
     private int lowlink;
     private boolean onStack;
 
-    public Node(int id, String name, String filename) {
+    public Node(int id, String name) {
         this.id = id;
         this.name = name;
-        this.filename = filename;
         chosen = false;
         index = -1;
         lowlink = -1;
@@ -68,24 +66,12 @@ public class Node {
         this.buyFor = buyFor;
     }
 
-    public String getFilename() {
-        return filename;
-    }
-
-    public boolean canBuyFor(String name) {
-        return Container.<Node>contains(new Node(id, name, filename), new NodeNameEquator(), buyFor) != -1;
-    }
-
     public boolean canBuyFor(int id) {
-        return Container.<Node>contains(new Node(id, name, filename), new NodeIdEquator(), buyFor) != -1;
-    }
-
-    public int getPos(String name) {
-        return Container.<Node>contains(new Node(id, name, filename), new NodeNameEquator(), buyFor);
+        return Container.<Node>contains(new Node(id, name), new NodeIdEquator(), buyFor) != -1;
     }
 
     public int getPos(int id) {
-        return Container.<Node>contains(new Node(id, name, filename), new NodeIdEquator(), buyFor);
+        return Container.<Node>contains(new Node(id, name), new NodeIdEquator(), buyFor);
     }
 
     public void shuffle() {

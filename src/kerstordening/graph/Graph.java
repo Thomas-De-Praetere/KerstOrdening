@@ -22,19 +22,23 @@ import kerstordening.graph.error.NotInitializedError;
 public class Graph {
 
     private boolean initialized = false;
-
+    private final ArrayList<Node> nodes;
+    
     public boolean isInitialized() {
         return initialized;
     }
-    private ArrayList<Node> nodes;
 
     public Graph() {
         nodes = new ArrayList<>();
     }
 
-    public void addNode(String name, String filename) {
+    public int size(){
+        return nodes.size();
+    }
+    
+    public void addNode(String name) {
         if (!initialized) {
-            nodes.add(new Node(nodes.size(), name, filename));
+            nodes.add(new Node(nodes.size(), name));
         } else {
             throw new AlreadyInitializedError("The edges in the graph are already calculated, please deinitialize the graph first.");
         }
@@ -51,15 +55,15 @@ public class Graph {
      * @param map
      */
     public void initialize(Map<String, ArrayList<String>> map) {
-        if (!map.keySet().stream().allMatch((st) -> Container.<Node>contains(new Node(0, st, st), new NodeNameEquator(), nodes) != -1)) {
+        if (!map.keySet().stream().allMatch((st) -> Container.<Node>contains(new Node(0, st), new NodeNameEquator(), nodes) != -1)) {
             throw new NodeMissingError("A name from the map had no node in the graph.");
         }
 
         for (String st : map.keySet()) {
-            Node n = nodes.get(Container.<Node>contains(new Node(0, st, st), new NodeNameEquator(), nodes));
+            Node n = nodes.get(Container.<Node>contains(new Node(0, st), new NodeNameEquator(), nodes));
             ArrayList<Node> nl = new ArrayList<>();
             for (String s : map.get(st)) {
-                nl.add(nodes.get(Container.<Node>contains(new Node(0, s, s), new NodeNameEquator(), nodes)));
+                nl.add(nodes.get(Container.<Node>contains(new Node(0, s), new NodeNameEquator(), nodes)));
             }
             n.setBuyFor(nl);
         }
@@ -158,5 +162,10 @@ public class Graph {
         } else {
             throw new NotInitializedError("The graph was not initialized.");
         }
+    }
+
+    public void reset() {
+        this.initialized = false;
+        nodes.clear();
     }
 }
