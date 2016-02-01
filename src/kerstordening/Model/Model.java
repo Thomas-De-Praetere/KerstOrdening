@@ -11,37 +11,44 @@ import java.util.List;
 import java.util.Set;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import kerstordening.Person.Person;
 
 /**
  *
  * @author Thomas De Praetere
  */
-public class Model implements Observable {
+public class Model implements Observable, InvalidationListener {
 
-    private final List<Person> persons;
+    private final ObservableList<Person> persons;
 
     private final Set<InvalidationListener> listeners;
 
     public Model() {
-        persons = new ArrayList<>();
+        persons = FXCollections.observableArrayList();
         listeners = new HashSet<>();
     }
 
     public void addPerson(Person p) {
         if (!persons.contains(p)) {
             persons.add(p);
-            listeners.stream().forEach((o) -> {
-                o.invalidated(this);
-            });
+            invalidated(this);
         }
     }
 
-    public List<Person> getPerson() {
+    public void removePerson(Person p) {
+        if (persons.contains(p)) {
+            persons.remove(p);
+            invalidated(this);
+        }
+    }
+
+    public ObservableList<Person> getPerson() {
         return persons;
     }
 
-    @Override
+       @Override
     public void addListener(InvalidationListener listener) {
         listeners.add(listener);
     }
@@ -49,6 +56,13 @@ public class Model implements Observable {
     @Override
     public void removeListener(InvalidationListener listener) {
         listeners.remove(listener);
+    }
+
+    @Override
+    public void invalidated(Observable observable) {
+         listeners.stream().forEach((o) -> {
+            o.invalidated(observable);
+        });
     }
 
 }

@@ -10,19 +10,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import kerstordening.Model.Controller;
+import kerstordening.Model.Model;
 
 /**
  *
  * @author Thomas De Praetere
  */
 public class Main extends Application {
-    
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
+        Model model = new Model();
+        Controller c = new Controller(model);
+        FXMLLoader l = new FXMLLoader(getClass().getResource("MainView.fxml"));
+        l.setController(c);
+        Parent root = l.load();
         Scene scene = new Scene(root);
-        
+
         stage.setScene(scene);
         stage.show();
     }
@@ -33,5 +38,5 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<VBox padding="$x1" prefHeight="756.0" prefWidth="1024.0" spacing="0.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" >
+    <children>
+        <MenuBar>
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <Menu mnemonicParsing="false" text="Add">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#fromFile" text="From file..." />
+                                <MenuItem mnemonicParsing="false" onAction="#fromFolder" text="From folder..." />
+                            </items>
+                        </Menu>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <HBox padding="$x1" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.margin="$x1" VBox.vgrow="ALWAYS">
+            <children>
+                <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </VBox.margin>
+                        </ListView>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="NEVER">
+                            <children>
+                                <Button id="AddButton" mnemonicParsing="false" onAction="#addFile" text="Add" />
+                                <Button id="RemoveButton" mnemonicParsing="false" onAction="#removeFile" text="Remove" />
+                            </children>
+                            <VBox.margin>
+                                <Insets fx:id="x1" />
+                            </VBox.margin>
+                        </HBox>
+                    </children>
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="NEVER">
+                            <children>
+                                <Label text="Name:" />
+                                <Label fx:id="nameLabel" text="Label" />
+                            </children>
+                        </HBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Label text="List:" />
+                                <TextArea fx:id="listText" prefWidth="200.0" wrapText="true" VBox.vgrow="ALWAYS" />
+                            </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                            <children>
+                                <Label text="Does Not Buy For:" />
+                                <ListView id="DoesNotBuyForList" fx:id="doesNotBuyForList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                    <children>
+                                        <Button mnemonicParsing="false" onAction="#addPerson" text="Add" />
+                                        <Button mnemonicParsing="false" onAction="#removePerson" text="Remove" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <children>
+                <Button fx:id="generateButton" mnemonicParsing="false" onAction="#generateList" text="Generate" />
+            </children>
+        </HBox>
+    </children>
+</VBox>
